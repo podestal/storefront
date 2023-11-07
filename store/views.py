@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
-from store.models import Product, Customer, Collection, Order, OrderItem
+from store.models import Product, Customer, Collection, Order, OrderItem, Review
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
-from .serializers import ProductSerializer, CollectionSerializer
+from .serializers import ProductSerializer, CollectionSerializer, ReivewSerializer
 from django.db.models.aggregates import Count
 from rest_framework.views import APIView
 
@@ -208,5 +208,8 @@ class CollectionDetail(RetrieveUpdateDestroyAPIView):
 #         collection.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
         
-
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReivewSerializer
+    
     
