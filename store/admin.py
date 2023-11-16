@@ -1,10 +1,10 @@
 from typing import Any
 from django.db.models.aggregates import Count
-from django.contrib.contenttypes.admin import GenericTabularInline
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.utils.html import format_html, urlencode
 from django.urls import reverse
+
 from . import models
 
 class InventoryFilter(admin.SimpleListFilter):
@@ -21,18 +21,24 @@ class InventoryFilter(admin.SimpleListFilter):
             queryset.filter(inventory__lt=10)
 
 
+class OrderItemInline(admin.StackedInline):
+    autocomplete_fields = ['product']
+    min_num = 1
+    max_num = 10
+    model = models.OrderItem
+    extra = 0
+
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     autocomplete_fields = ['customer']
+    inlines = [OrderItemInline]
     list_display = ['id', 'placed_at', 'customer']
     list_select_related = ['customer']
 
-class TagInline(GenericTabularInline):
-    # model = TaggedItem
-    pass
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+    search_fields = ['title']
     autocomplete_fields = ['collection']
     prepopulated_fields = {
         'slug': ['title']

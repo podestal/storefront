@@ -13,7 +13,7 @@ class TaggedItem(models.Model):
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     # Type of an object (product, video, article)
     # ID
-    contentType = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    objectId = models.PositiveIntegerField()
-    # contentObject = GenericForeignKey()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
     
