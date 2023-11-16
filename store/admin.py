@@ -23,6 +23,7 @@ class InventoryFilter(admin.SimpleListFilter):
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['customer']
     list_display = ['id', 'placed_at', 'customer']
     list_select_related = ['customer']
 
